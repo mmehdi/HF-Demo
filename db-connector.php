@@ -3,7 +3,7 @@
 function getDB(){
   $username="happerley";
   $password="happerley";
-  $database="happerley_reader";
+  $database="happerley";
   $db_url = "localhost:8889";
 
   // Opens a connection to a MySQL server
@@ -43,6 +43,43 @@ function getAnimalByTag($tag_no){
 
 function getMemberByRefNo($member_ref){
     $query = "SELECT * FROM member WHERE member_ref='".$member_ref."'";
+    $result = fetch($query);
+
+    return $result;
+}
+
+function getCarcassSheetByID($id){
+    $query = "SELECT * FROM carcass_sheet WHERE id='".$id."'";
+    $result = fetch($query);
+
+    return $result;
+}
+
+function getRestaurantCarcassByID($id){ //internal table id
+    $query = "SELECT * FROM restaurant_carcass WHERE id='".$id."'";
+    $result = fetch($query);
+
+    return $result;
+}
+
+//restaurant info
+function getRestaurantByID($id){
+    $query = "SELECT * FROM fsa_hygiene_ratings WHERE fshid='".$id."'";
+    $result = fetch($query);
+
+    return $result;
+}
+
+
+function getAbbotairByID($id){
+    $query = "SELECT * FROM fsa_approved_ungulates_england WHERE app_no='".$id."'";
+    $result = fetch($query);
+
+    return $result;
+}
+
+function getButcherByID($id){
+    $query = "SELECT * FROM fsa_hygiene_ratings WHERE fshid='".$id."'";
     $result = fetch($query);
 
     return $result;

@@ -20,30 +20,41 @@
 
     function load() {
       var map = new google.maps.Map(document.getElementById("map"), {
-        center: new google.maps.LatLng(47.6145, -122.3418),
-        zoom: 13,
+        center: new google.maps.LatLng(51.864211, -2.238034),
+        zoom: 6,
         mapTypeId: 'roadmap'
       });
       var infoWindow = new google.maps.InfoWindow;
 
       // Change this depending on the name of your PHP file
       downloadUrl("phpsqlajax_genxml.php", function(data) {
+    
+    /*    var pinIcon = new google.maps.MarkerImage(
+    "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|00D900",
+    null, 
+    null, 
+    null, 
+    new google.maps.Size(12, 18)
+);*/
+
         var xml = data.responseXML;
         var markers = xml.documentElement.getElementsByTagName("marker");
         for (var i = 0; i < markers.length; i++) {
           var name = markers[i].getAttribute("name");
           var address = markers[i].getAttribute("address");
+          //mystring.replace(/\./g,' ')
+          address = address.replace(/\,/g, '<br/>');
           var type = markers[i].getAttribute("type");
           var point = new google.maps.LatLng(
               parseFloat(markers[i].getAttribute("lat")),
-              parseFloat(markers[i].getAttribute("lng")));
-          var html = "<b>" + name + "</b> <br/>" + address;
-          var icon = customIcons[type] || {};
+              parseFloat(markers[i].getAttribute("long")));
+          var html = "<b>"+ type +"</b><br/><br/><i>" + name + "</i> <br/><br/>" + address;
+          //var icon = customIcons[type] || {};
           var marker = new google.maps.Marker({
             map: map,
             position: point,
-            icon: icon.icon,
-            shadow: icon.shadow
+//            icon: pinIcon,
+            //shadow: icon.shadow
           });
           bindInfoWindow(marker, map, infoWindow, html);
         }
